@@ -1,0 +1,25 @@
+{
+  "name": "Mark and Save",
+  "description": "Chrome extension for fast marking of word or sentences, and storing their translation as a vocabulary",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+  	"service_worker": "background.js"
+  },
+  "permissions": ["storage"],
+  "action": {
+  	"default_popup": "popup.html",
+	"defualt_icon": {
+		"16": "/images/94508612316366463585374-16.png",
+		"32": "/images/94508612316366463585374-32.png",
+		"48": "/images/94508612316366463585374-48.png",
+		"128": "images/94508612316366463585374-128.png"
+	}
+  }, 
+  "icons": {
+	"16": "/images/94508612316366463585374-16.png",
+ 	"32": "/images/94508612316366463585374-32.png",
+ 	"48": "/images/94508612316366463585374-48.png",
+ 	"128": "images/94508612316366463585374-128.png"
+  }
+}
