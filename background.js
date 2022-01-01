@@ -1,6 +1,6 @@
 chrome.runtime.onInstalled.addListener(function() {
     chrome.contextMenus.create({
-        "title": 'Add "%s" to the vocabulary',
+        "title": 'Translate and add "%s"',
         "contexts": ["selection"],
         "id": "myContextMenuId"
     });
