@@ -1,5 +1,6 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
+  
 }
 
 h1 {
@@ -48,6 +49,8 @@ th {
 .buttons-container button {
   margin: 3px;
   width: 95%;
+  white-space: nowrap;
+  text-align: center;
 }
 
 .red-row {
