@@ -5,6 +5,9 @@ chrome.storage.local.get("words", ({
 });
 
 document.getElementById("remove-words").addEventListener("click", function() {
+    var removeWordsBtn = document.getElementById("remove-words");
+    removeWordsBtn.className = "active-btn";
+    removeWordsBtn.disabled = true;
     var tbl = document.getElementById("table");
     var thead = document.getElementById("table-head");
     thead.appendChild(document.createElement("th")).
@@ -31,6 +34,8 @@ document.getElementById("remove-words").addEventListener("click", function() {
         });
         // Remove save btn after it is being clicked
         saveBtn.parentNode.removeChild(saveBtn);
+        removeWordsBtn.className = "";
+        removeWordsBtn.disabled = false;
         return false;
     };
     document.body.appendChild(saveBtn);
