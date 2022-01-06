@@ -34,7 +34,7 @@ function storeWordAndTranslation(word, translation) {
     storage.get("words", function(items) {
         if (items.words != undefined) {
             let old_words = items.words;
-            old_words[word] = translation
+            old_words[word.toLowerCase()] = translation
             console.log(old_words);
             storage.set({
                 "words": old_words
