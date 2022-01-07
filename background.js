@@ -9,11 +9,6 @@ chrome.runtime.onInstalled.addListener(function() {
 
 var storage = chrome.storage.local;
 
-
-//storage.remove("words", function (){
-//           console.log("Words has been removed");
-//});
-
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     translateAndStoreWord(info.selectionText);
 })
@@ -35,7 +30,6 @@ function storeWordAndTranslation(word, translation) {
         if (items.words != undefined) {
             let old_words = items.words;
             old_words[word.toLowerCase()] = translation
-            console.log(old_words);
             storage.set({
                 "words": old_words
             }, function() {

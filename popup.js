@@ -13,6 +13,7 @@ document.getElementById("remove-words").addEventListener("click", function() {
     thead.appendChild(document.createElement("th")).
     appendChild(document.createTextNode("Remove"));
     var checkboxes = addCheckboxes();
+    // Create save btn
     var saveBtn = document.createElement("button");
     saveBtn.innerHTML = 'Save';
     saveBtn.className = "save-btn";
@@ -57,10 +58,24 @@ function tableCreate(words) {
     var thead = document.createElement('thead');
     thead.id = "table-head";
     tbl.appendChild(thead);
-    thead.appendChild(document.createElement("th")).
-    appendChild(document.createTextNode("English"));
-    thead.appendChild(document.createElement("th")).
-    appendChild(document.createTextNode("Spanish"));
+    chrome.storage.local.get('from', function(items) {
+        if (items.from != undefined) {
+            thead.appendChild(document.createElement("th")).
+            appendChild(document.createTextNode(items.from));
+        } else {
+            thead.appendChild(document.createElement("th")).
+            appendChild(document.createTextNode("N/A"));
+        }
+    });
+    chrome.storage.local.get('to', function(items) {
+        if (items.to != undefined) {
+            thead.appendChild(document.createElement("th")).
+            appendChild(document.createTextNode(items.to));
+        } else {
+            thead.appendChild(document.createElement("th")).
+            appendChild(document.createTextNode("N/A"));
+        }
+    });
     Object.keys(words)
         .forEach(function eachKek(key) {
             const tr = tbl.insertRow();
