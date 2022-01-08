@@ -13,16 +13,25 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
     translateAndStoreWord(info.selectionText);
 })
 
-function translateAndStoreWord(word) {
-    fetch("https://api-free.deepl.com/v2/translate", {
-            body: "auth_key=d0477023-8452-ae5a-f7ba-bd904a015b6a:fx&text=" + word + "&target_lang=ES",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            method: "POST"
-        })
-        .then(response => response.json())
-        .then(data => storeWordAndTranslation(word, data.translations[0].text));
+async function translateAndStoreWord(word) {
+    let fromLanguage = await storage.get("from");
+    let toLanguage = await storage.get("to");
+    if (fromLanguage === undefined) {
+        fromLanguage = "EN";
+    }
+    if (toLanguage === undefined) {
+        toLanguage = "ES";
+    }
+    let response = await fetch("https://api-free.deepl.com/v2/translate", {
+        body: "auth_key=d0477023-8452-ae5a-f7ba-bd904a015b6a:fx&text=" + word + "&target_lang=" + toLanguage.to + "&source_lang=" + fromLanguage.from,
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        method: "POST"
+    });
+    let data = await response.json();
+    console.log(data);
+    storeWordAndTranslation(word, data.translations[0].text);
 }
 
 function storeWordAndTranslation(word, translation) {

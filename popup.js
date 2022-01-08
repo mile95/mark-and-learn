@@ -64,7 +64,7 @@ function tableCreate(words) {
             appendChild(document.createTextNode(items.from));
         } else {
             thead.appendChild(document.createElement("th")).
-            appendChild(document.createTextNode("N/A"));
+            appendChild(document.createTextNode("English (default)"));
         }
     });
     chrome.storage.local.get('to', function(items) {
@@ -73,7 +73,7 @@ function tableCreate(words) {
             appendChild(document.createTextNode(items.to));
         } else {
             thead.appendChild(document.createElement("th")).
-            appendChild(document.createTextNode("N/A"));
+            appendChild(document.createTextNode("Spanish (default)"));
         }
     });
     Object.keys(words)
