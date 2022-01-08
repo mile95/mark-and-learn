@@ -4,13 +4,28 @@ chrome.storage.local.get("words", ({
     tableCreate(words);
 });
 
+chrome.storage.local.get("apikey", ({
+	apikey
+}) => {
+	if(apikey === undefined || apikey === null) {
+		var p = document.createElement("P");
+    	p.innerHTML = "Please configure the api-key before trying to translate words!";
+    	p.id = "warning-text";
+		document.body.appendChild(p);
+	}
+});
+
 document.getElementById("remove-words").addEventListener("click", function() {
     var removeWordsBtn = document.getElementById("remove-words");
     removeWordsBtn.className = "active-btn";
     removeWordsBtn.disabled = true;
     var tbl = document.getElementById("table");
     var thead = document.getElementById("table-head");
-    thead.appendChild(document.createElement("th")).
+    if(thead != null) {
+		thead = document.createElement('thead');
+		thead.id = "table-head";
+	}
+	thead.appendChild(document.createElement("th")).
     appendChild(document.createTextNode("Remove"));
     var checkboxes = addCheckboxes();
     // Create save btn
@@ -76,15 +91,17 @@ function tableCreate(words) {
             appendChild(document.createTextNode("Spanish (default)"));
         }
     });
-    Object.keys(words)
-        .forEach(function eachKek(key) {
-            const tr = tbl.insertRow();
-            const tdFrom = tr.insertCell();
-            const tdTo = tr.insertCell();
-            tdFrom.appendChild(document.createTextNode(capitalizeFirstLetter(key)));
-            tdTo.appendChild(document.createTextNode(capitalizeFirstLetter(words[key])));
-        });
-    body.appendChild(tbl)
+    if(words != undefined || words != null) {
+		Object.keys(words)
+        	.forEach(function eachKek(key) {
+            	const tr = tbl.insertRow();
+            	const tdFrom = tr.insertCell();
+            	const tdTo = tr.insertCell();
+            	tdFrom.appendChild(document.createTextNode(capitalizeFirstLetter(key)));
+            	tdTo.appendChild(document.createTextNode(capitalizeFirstLetter(words[key])));
+        	});
+    	body.appendChild(tbl)
+	}
 }
 
 function capitalizeFirstLetter(string) {

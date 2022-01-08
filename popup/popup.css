@@ -87,3 +87,9 @@ button:hover, button:active, button:focus {
 #practice-words {
   background: gray;
 }
+
+#warning-text {
+  text-align: center;
+  color: #e76f51;
+  font-size: 14px;
+}

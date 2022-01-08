@@ -1,21 +1,11 @@
 var storage = chrome.storage.local;
 
 chrome.runtime.onInstalled.addListener(function() {
-    storage.get("apikey", function(items) {
-		if (items.apikey != undefined) {
 			chrome.contextMenus.create({
 				"title": 'Translate and add "%s"',
 				"contexts": ["selection"],
 				"id": "myContextMenuId"
 			});
-		} else {
-			chrome.contextMenus.create({
-				"title": '[NO API-KEY SET] - Please configure extension',
-				"contexts": ["selection"],
-				"id": "myContextMenuId"
-			});
-		}
-	});
 });
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
