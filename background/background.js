@@ -1,13 +1,22 @@
-chrome.runtime.onInstalled.addListener(function() {
-    chrome.contextMenus.create({
-        "title": 'Translate and add "%s"',
-        "contexts": ["selection"],
-        "id": "myContextMenuId"
-    });
-});
-
-
 var storage = chrome.storage.local;
+
+chrome.runtime.onInstalled.addListener(function() {
+    storage.get("apikey", function(items) {
+		if (items.apikey != undefined) {
+			chrome.contextMenus.create({
+				"title": 'Translate and add "%s"',
+				"contexts": ["selection"],
+				"id": "myContextMenuId"
+			});
+		} else {
+			chrome.contextMenus.create({
+				"title": '[NO API-KEY SET] - Please configure extension',
+				"contexts": ["selection"],
+				"id": "myContextMenuId"
+			});
+		}
+	});
+});
 
 chrome.contextMenus.onClicked.addListener(function(info, tab) {
     translateAndStoreWord(info.selectionText);
@@ -16,21 +25,21 @@ chrome.contextMenus.onClicked.addListener(function(info, tab) {
 async function translateAndStoreWord(word) {
     let fromLanguage = await storage.get("from");
     let toLanguage = await storage.get("to");
-    if (fromLanguage === undefined) {
+    let apiKey = await storage.get("apikey");
+	if (fromLanguage === undefined) {
         fromLanguage = "EN";
     }
     if (toLanguage === undefined) {
         toLanguage = "ES";
     }
     let response = await fetch("https://api-free.deepl.com/v2/translate", {
-        body: "auth_key=d0477023-8452-ae5a-f7ba-bd904a015b6a:fx&text=" + word + "&target_lang=" + toLanguage.to + "&source_lang=" + fromLanguage.from,
+        body: "auth_key=" + apiKey.apikey + "&text=" + word + "&target_lang=" + toLanguage.to + "&source_lang=" + fromLanguage.from,
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
         method: "POST"
     });
     let data = await response.json();
-    console.log(data);
     storeWordAndTranslation(word, data.translations[0].text);
 }
 
