@@ -73,6 +73,7 @@ button:hover, button:active, button:focus {
 .active-btn {
   background: #e9c46a;
 }
+
 .save-btn {
   width: 20%;
   margin-left: 40%;
@@ -81,4 +82,8 @@ button:hover, button:active, button:focus {
   padding: 5px 15px;
   font-size: 10px;
   color: black;
+}
+
+#practice-words {
+  background: gray;
 }
