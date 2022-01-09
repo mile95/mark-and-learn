@@ -25,7 +25,7 @@ Once the extension is installed, you need to configure it a tiny bit.
 
 First of all, Mark And Learn use [DeepL](https://www.deepl.com/) as the translator engine. DeepL provides a free tier API where one is allowed to translate 500K characters each month. You will need to register for the free tier API to get your API key.
 
-Go to the options page for the extension (right-click on the extension icon), and insert your API key. You can also configure the language that you want to translate from and translate too.
+Go to the options page for the extension (right-click on the extension icon), and insert your API key. You can also configure the language that you want to translate from and translate to.
 
 ## Post Beta
 
