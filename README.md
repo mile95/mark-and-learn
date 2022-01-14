@@ -12,7 +12,7 @@ One popular way of learning a new language is to read a lot of texts in that lan
 ## Installation
 
 ### Chrome Web Store
-Currently, the Mark And Learn extension is being reviewed. The extension is therefore not available in the chrome web store yet.
+Install it from [here](https://chrome.google.com/webstore/detail/mark-and-learn/lpbdbbjfcohnhnhkndnaapannpehngee?hl=sv&authuser=0)
 
 ### Install it manually
 1. Clone the repo
