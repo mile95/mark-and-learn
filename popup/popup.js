@@ -28,8 +28,33 @@ document.getElementById("remove-words").addEventListener("click", function() {
 	thead.appendChild(document.createElement("th")).
     appendChild(document.createTextNode("Remove"));
     var checkboxes = addCheckboxes();
-    var saveButton = createSaveButton(checkboxes, tbl);
-    document.body.appendChild(saveButton);
+    // Create save btn
+    var saveBtn = document.createElement("button");
+    saveBtn.innerHTML = 'Save';
+    saveBtn.className = "save-btn";
+    saveBtn.onclick = function() {
+        var wordsToRemove = [];
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                wordsToRemove.push(tbl.rows[i].cells[0].innerText);
+            }
+        }
+        chrome.storage.local.get("words", function(items) {
+            let words = items.words;
+            wordsToRemove.forEach(word => delete words[word.toString().toLowerCase()]);
+            chrome.storage.local.set({
+                "words": words
+            }, function() {
+                tableCreate(words);
+            });
+        });
+        // Remove save btn after it is being clicked
+        saveBtn.parentNode.removeChild(saveBtn);
+        removeWordsBtn.className = "";
+        removeWordsBtn.disabled = false;
+        return false;
+    };
+    document.body.appendChild(saveBtn);
 }, false);
 
 function tableCreate(words) {
@@ -77,36 +102,6 @@ function tableCreate(words) {
         	});
     	body.appendChild(tbl)
 	}
-}
-
-function createSaveButton(checkboxes, table) {
-    var saveBtn = document.createElement("button");
-    saveBtn.innerHTML = 'Save';
-    saveBtn.className = "save-btn";
-    saveBtn.onclick = function() {
-        var wordsToRemove = [];
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].checked) {
-                wordsToRemove.push(table.rows[i].cells[0].innerText);
-            }
-        }
-        chrome.storage.local.get("words", function(items) {
-            let words = items.words;
-            wordsToRemove.forEach(word => delete words[word.toString().toLowerCase()]);
-            chrome.storage.local.set({
-                "words": words
-            }, function() {
-                tableCreate(words);
-            });
-        });
-        // Remove save btn after it is being clicked
-        saveBtn.parentNode.removeChild(saveBtn);
-        // Unfocus the remove button
-        document.getElementById("remove-words").className = "";
-        document.getElementById("remove-words").disabled = false;
-        return false;
-    };
-    return saveBtn;
 }
 
 function capitalizeFirstLetter(string) {
