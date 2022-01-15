@@ -20,4 +20,4 @@ jobs:
         uses: creyD/prettier_action@v4.1.1
         with:
           dry: True
-          prettier_options: --check
+          prettier_options: --check .
