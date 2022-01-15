@@ -10,7 +10,6 @@ chrome.runtime.onInstalled.addListener(function() {
 
 chrome.contextMenus.onClicked.addListener(async function(info, tab) {
     var translation = await translateWord(info.selectionText);
-    //translateAndStoreWord(info.selectionText);
     storeWordAndTranslation(info.selectionText, translation);
 })
 
