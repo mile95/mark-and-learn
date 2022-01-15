@@ -1,22 +1,24 @@
 var storage = chrome.storage.local;
 
 chrome.runtime.onInstalled.addListener(function() {
-			chrome.contextMenus.create({
-				"title": 'Translate and add "%s"',
-				"contexts": ["selection"],
-				"id": "myContextMenuId"
-			});
+    chrome.contextMenus.create({
+        "title": 'Translate and add "%s"',
+        "contexts": ["selection"],
+        "id": "myContextMenuId"
+    });
 });
 
-chrome.contextMenus.onClicked.addListener(function(info, tab) {
-    translateAndStoreWord(info.selectionText);
+chrome.contextMenus.onClicked.addListener(async function(info, tab) {
+    var translation = await translateWord(info.selectionText);
+    //translateAndStoreWord(info.selectionText);
+    storeWordAndTranslation(info.selectionText, translation);
 })
 
-async function translateAndStoreWord(word) {
+async function translateWord(word) {
     let fromLanguage = await storage.get("from");
     let toLanguage = await storage.get("to");
     let apiKey = await storage.get("apikey");
-	if (fromLanguage === undefined) {
+    if (fromLanguage === undefined) {
         fromLanguage = "EN";
     }
     if (toLanguage === undefined) {
@@ -30,7 +32,7 @@ async function translateAndStoreWord(word) {
         method: "POST"
     });
     let data = await response.json();
-    storeWordAndTranslation(word, data.translations[0].text);
+    return data.translations[0].text;
 }
 
 function storeWordAndTranslation(word, translation) {
