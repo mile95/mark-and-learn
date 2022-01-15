@@ -46,3 +46,20 @@ There are a few things to improve.
 # Contribute?
 
 Feel free to create issues and PRs!
+
+## Development setup
+
+(Prettier)[] is used for formatting the code.
+
+It can be installed by:
+
+```
+npm install --save-dev --save-exact prettier
+
+```
+
+Run it by:
+
+```
+npx prettier --write .
+```
