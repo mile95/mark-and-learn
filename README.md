@@ -49,13 +49,12 @@ Feel free to create issues and PRs!
 
 ## Development setup
 
-(Prettier)[] is used for formatting the code.
+[Prettier](https://prettier.io/) is used for formatting the code.
 
 It can be installed by:
 
 ```
 npm install --save-dev --save-exact prettier
-
 ```
 
 Run it by:
