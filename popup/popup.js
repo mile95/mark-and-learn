@@ -5,14 +5,14 @@ chrome.storage.local.get("words", ({
 });
 
 chrome.storage.local.get("apikey", ({
-	apikey
+    apikey
 }) => {
-	if(apikey === undefined || apikey === null) {
-		var p = document.createElement("P");
-    	p.innerHTML = "Please configure the api-key before trying to translate words!";
-    	p.id = "warning-text";
-		document.body.appendChild(p);
-	}
+    if (apikey === undefined || apikey === null) {
+        var p = document.createElement("P");
+        p.innerHTML = "Please configure the api-key before trying to translate words!";
+        p.id = "warning-text";
+        document.body.appendChild(p);
+    }
 });
 
 document.getElementById("remove-words").addEventListener("click", function() {
@@ -21,11 +21,11 @@ document.getElementById("remove-words").addEventListener("click", function() {
     removeWordsBtn.disabled = true;
     var tbl = document.getElementById("table");
     var thead = document.getElementById("table-head");
-    if(thead != null) {
-		thead = document.createElement('thead');
-		thead.id = "table-head";
-	}
-	thead.appendChild(document.createElement("th")).
+    if (thead != null) {
+        thead = document.createElement('thead');
+        thead.id = "table-head";
+    }
+    thead.appendChild(document.createElement("th")).
     appendChild(document.createTextNode("Remove"));
     var checkboxes = addCheckboxes();
     // Create save btn
@@ -34,7 +34,7 @@ document.getElementById("remove-words").addEventListener("click", function() {
 }, false);
 
 function createSaveButton(checkboxes, table) {
-	 var saveBtn = document.createElement("button");
+    var saveBtn = document.createElement("button");
     saveBtn.innerHTML = 'Save';
     saveBtn.className = "save-btn";
     saveBtn.onclick = function() {
@@ -55,12 +55,12 @@ function createSaveButton(checkboxes, table) {
         });
         // Remove save btn after it is being clicked
         saveBtn.parentNode.removeChild(saveBtn);
-		var removeWordsBtn = document.getElementById('remove-words');
-		removeWordsBtn.className = "";
+        var removeWordsBtn = document.getElementById('remove-words');
+        removeWordsBtn.className = "";
         removeWordsBtn.disabled = false;
         return false;
     };
-	return saveBtn;
+    return saveBtn;
 }
 
 function createTable(words) {
@@ -96,17 +96,17 @@ function createTable(words) {
             appendChild(document.createTextNode("Spanish (default)"));
         }
     });
-    if(words != undefined || words != null) {
-		Object.keys(words)
-        	.forEach(function eachKey(key) {
-            	const tr = tbl.insertRow();
-            	const tdFrom = tr.insertCell();
-            	const tdTo = tr.insertCell();
-            	tdFrom.appendChild(document.createTextNode(capitalizeFirstLetter(key)));
-            	tdTo.appendChild(document.createTextNode(capitalizeFirstLetter(words[key])));
-        	});
-    	document.body.appendChild(tbl)
-	}
+    if (words != undefined || words != null) {
+        Object.keys(words)
+            .forEach(function eachKey(key) {
+                const tr = tbl.insertRow();
+                const tdFrom = tr.insertCell();
+                const tdTo = tr.insertCell();
+                tdFrom.appendChild(document.createTextNode(capitalizeFirstLetter(key)));
+                tdTo.appendChild(document.createTextNode(capitalizeFirstLetter(words[key])));
+            });
+        document.body.appendChild(tbl)
+    }
 }
 
 function capitalizeFirstLetter(string) {
