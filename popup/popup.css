@@ -14,6 +14,7 @@ table {
   border-collapse: collapse;
   width: 100%;
   font-size: 12px;
+  table-layout: fixed;
 }
 
 td {
@@ -48,16 +49,16 @@ th {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3px;
 }
 
 button {
   color: black;
-  font-size: 12px;
+  font-size: 10px;
   text-decoration: none;
-  margin: 15px;
+  margin-bottom: 10px;
+  margin-right: 10px;
   border: 2px solid black;
-  padding: 10px 30px;
+  padding: 8px 10px;
   text-transform: uppercase;
   overflow: hidden;
   background-color: #f4a261;
@@ -80,7 +81,7 @@ button:focus {
   width: 20%;
   margin-left: 40%;
   margin-right: 40%;
-  background-color: #e76f51;
+  background-color: #f4a261;
   padding: 5px 15px;
   font-size: 10px;
   color: black;
@@ -94,4 +95,28 @@ button:focus {
   text-align: center;
   color: #e76f51;
   font-size: 14px;
+}
+
+#options-form-div {
+  text-align: left;
+  border: 2px solid black;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+#options-form-div form input {
+  margin-bottom: 10px;
+  background-color: #2a9d8f;
+  border: 1px solid black;
+}
+
+#options-form-div select {
+  margin-bottom: 10px;
+}
+
+#options-form-language-div select {
+  background-color: #2a9d8f;
+  border: 1px solid black;
 }

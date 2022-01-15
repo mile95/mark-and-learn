@@ -1,3 +1,31 @@
+const languages = [
+  "BG - Bulgarian",
+  "CS - Czech",
+  "DA - Danish",
+  "DE - German",
+  "EN - English",
+  "ES - Spanish",
+  "ET - Estonian",
+  "HU - Hungarian",
+  "IT - Italian",
+  "EL - Greek",
+  "FI - Finnish",
+  "FR - French",
+  "JA - Japanese",
+  "LT - Lithuanian",
+  "LV - Latvian",
+  "NL - Dutch",
+  "PL - Polish",
+  "PT - Portuguese",
+  "PT - Polish",
+  "RO - Romanian",
+  "RU - Russian",
+  "SK - Slovak",
+  "SL - Slovenian",
+  "SV - Swedish",
+  "ZH - Chinese",
+];
+
 chrome.storage.local.get("words", ({ words }) => {
   createTable(words);
 });
@@ -11,6 +39,74 @@ chrome.storage.local.get("apikey", ({ apikey }) => {
     document.body.appendChild(p);
   }
 });
+
+document.getElementById("options-button").addEventListener(
+  "click",
+  function () {
+    var optionsButton = document.getElementById("options-button");
+    optionsButton.className = "active-btn";
+    optionsButton.disabled = true;
+
+    var optionsFormDiv = document.createElement("div");
+    optionsFormDiv.id = "options-form-div";
+    var form = document.createElement("form");
+
+    var apiKeyInput = document.createElement("input");
+    var apiKeyLabel = document.createElement("Label");
+    apiKeyInput.type = "text";
+    apiKeyInput.name = "api key";
+    apiKeyInput.id = "api-key-input";
+    apiKeyLabel.htmlFor = "api-key-input";
+    apiKeyLabel.innerHTML = "Deepl api key ";
+
+    var optionsFormLanguageDiv = document.createElement("div");
+    optionsFormLanguageDiv.id = "options-form-language-div";
+
+    var fromLanguageSelect = document.createElement("select");
+    var fromLanguageLabel = document.createElement("Label");
+    fromLanguageSelect.name = "from-language";
+    fromLanguageSelect.id = "from-language";
+    fromLanguageLabel.innerHTML = "Translate from ";
+
+    var toLanguageSelect = document.createElement("select");
+    var toLanguageLabel = document.createElement("Label");
+    toLanguageSelect.name = "to-language";
+    toLanguageSelect.id = "to-language";
+    toLanguageLabel.innerHTML = " to ";
+
+    for (const language of languages) {
+      var optionFrom = document.createElement("option");
+      var optionTo = document.createElement("option");
+      optionFrom.value = language.split(" - ")[0];
+      optionTo.value = language.split(" - ")[0];
+      optionFrom.innerHTML = language.split(" - ")[1];
+      optionTo.innerHTML = language.split(" - ")[1];
+      fromLanguageSelect.appendChild(optionFrom);
+      toLanguageSelect.appendChild(optionTo);
+    }
+
+    var saveOptionsButton = document.createElement("Button");
+    saveOptionsButton.id = "save-options-button";
+    saveOptionsButton.innerHTML = "Save";
+    saveOptionsButton.className = "save-btn";
+
+    optionsFormLanguageDiv.appendChild(fromLanguageLabel);
+    optionsFormLanguageDiv.appendChild(fromLanguageSelect);
+    optionsFormLanguageDiv.appendChild(toLanguageLabel);
+    optionsFormLanguageDiv.appendChild(toLanguageSelect);
+
+    form.appendChild(apiKeyLabel);
+    form.appendChild(apiKeyInput);
+    form.appendChild(optionsFormLanguageDiv);
+    optionsFormDiv.appendChild(form);
+    optionsFormDiv.appendChild(saveOptionsButton);
+    document.body.insertBefore(
+      optionsFormDiv,
+      document.getElementById("table")
+    );
+  },
+  false
+);
 
 document.getElementById("remove-words").addEventListener(
   "click",
