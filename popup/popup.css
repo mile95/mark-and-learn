@@ -110,6 +110,7 @@ button:focus {
   margin-bottom: 10px;
   background-color: #2a9d8f;
   border: 1px solid black;
+  width: 70%;
 }
 
 #options-form-div select {

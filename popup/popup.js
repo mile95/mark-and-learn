@@ -50,6 +50,7 @@ document.getElementById("options-button").addEventListener(
     var optionsFormDiv = document.createElement("div");
     optionsFormDiv.id = "options-form-div";
     var form = document.createElement("form");
+    form.id = "form";
 
     var apiKeyInput = document.createElement("input");
     var apiKeyLabel = document.createElement("Label");
@@ -89,6 +90,31 @@ document.getElementById("options-button").addEventListener(
     saveOptionsButton.id = "save-options-button";
     saveOptionsButton.innerHTML = "Save";
     saveOptionsButton.className = "save-btn";
+    saveOptionsButton.addEventListener(
+      "click",
+      function () {
+        var form = document.getElementById("form");
+        chrome.storage.local.set(
+          {
+            apikey: form.elements[0].value,
+            from: form.elements[1].value,
+            to: form.elements[2].value,
+          },
+          function () {
+            console.log("apikey, from and to updated");
+          }
+        );
+        var optionsDiv = document.getElementById("options-form-div");
+        document.body.removeChild(optionsDiv);
+        var optionsBtn = document.getElementById("options-button");
+        optionsBtn.className = "";
+        optionsBtn.disabled = false;
+        chrome.storage.local.get("words", ({ words }) => {
+          createTable(words);
+        });
+      },
+      false
+    );
 
     optionsFormLanguageDiv.appendChild(fromLanguageLabel);
     optionsFormLanguageDiv.appendChild(fromLanguageSelect);
@@ -104,6 +130,7 @@ document.getElementById("options-button").addEventListener(
       optionsFormDiv,
       document.getElementById("table")
     );
+    setSelectedValues(form);
   },
   false
 );
@@ -215,6 +242,39 @@ function createTable(words) {
     });
     document.body.appendChild(tbl);
   }
+}
+
+function setSelectedValues(form) {
+  // Set default from language
+  chrome.storage.local.get("from", function (items) {
+    if (items.from != undefined) {
+      for (var i, j = 0; (i = form.elements[1].options[j]); j++) {
+        if (i.value == items.from) {
+          form.elements[1].selectedIndex = j;
+          break;
+        }
+      }
+    }
+  });
+
+  // Set default to language
+  chrome.storage.local.get("to", function (items) {
+    if (items.to != undefined) {
+      for (var i, j = 0; (i = form.elements[2].options[j]); j++) {
+        if (i.value == items.to) {
+          form.elements[2].selectedIndex = j;
+          break;
+        }
+      }
+    }
+  });
+
+  // Set default API key
+  chrome.storage.local.get("apikey", function (items) {
+    if (items.apikey != undefined) {
+      form.elements[0].defaultValue = items.apikey;
+    }
+  });
 }
 
 function capitalizeFirstLetter(string) {
