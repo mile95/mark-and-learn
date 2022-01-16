@@ -43,6 +43,9 @@ chrome.storage.local.get("apikey", ({ apikey }) => {
 document.getElementById("options-button").addEventListener(
   "click",
   function () {
+    if (isAtLeastOneButtonAcitve()) {
+      return;
+    }
     var optionsButton = document.getElementById("options-button");
     optionsButton.className = "active-btn";
     optionsButton.disabled = true;
@@ -138,6 +141,9 @@ document.getElementById("options-button").addEventListener(
 document.getElementById("remove-words").addEventListener(
   "click",
   function () {
+    if (isAtLeastOneButtonAcitve()) {
+      return;
+    }
     var removeWordsBtn = document.getElementById("remove-words");
     removeWordsBtn.className = "active-btn";
     removeWordsBtn.disabled = true;
@@ -275,6 +281,17 @@ function setSelectedValues(form) {
       form.elements[0].defaultValue = items.apikey;
     }
   });
+}
+
+function isAtLeastOneButtonAcitve() {
+  var removeWordsButton = document.getElementById("remove-words");
+  var optionsButton = document.getElementById("options-button");
+  var practiceButton = document.getElementById("practice-words");
+  return (
+    removeWordsButton.className === "active-btn" ||
+    optionsButton.className === "active-btn" ||
+    practiceButton.calassName === "active-btn"
+  );
 }
 
 function capitalizeFirstLetter(string) {
