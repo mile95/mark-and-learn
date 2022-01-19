@@ -112,8 +112,19 @@ document.getElementById("options-button").addEventListener(
         var optionsBtn = document.getElementById("options-button");
         optionsBtn.className = "";
         optionsBtn.disabled = false;
-        chrome.storage.local.get("words", ({ words }) => {
-          createTable(words);
+
+        chrome.storage.local.get("apikey", ({ apikey }) => {
+          if (apikey === undefined || apikey === null || apikey === "") {
+            return;
+          } else {
+            var warningText = document.getElementById("warning-text");
+            if (warningText != undefined) {
+              document.body.removeChild(warningText);
+            }
+            chrome.storage.local.get("words", ({ words }) => {
+              createTable(words);
+            });
+          }
         });
       },
       false
@@ -203,7 +214,7 @@ function createTable(words) {
   // Would be better to just remove words in existing table than
   // destroy the old table and create the new one.
   var tbl = document.getElementById("table");
-  if (tbl === null) {
+  if (tbl === null || tbl === undefined) {
     tbl = document.createElement("table");
     tbl.id = "table";
   } else {
@@ -246,8 +257,8 @@ function createTable(words) {
         document.createTextNode(capitalizeFirstLetter(words[key]))
       );
     });
-    document.body.appendChild(tbl);
   }
+  document.body.appendChild(tbl);
 }
 
 function setSelectedValues(form) {
