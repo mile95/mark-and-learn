@@ -1,9 +1,37 @@
+const languages = [
+  "BG - Bulgarian",
+  "CS - Czech",
+  "DA - Danish",
+  "DE - German",
+  "EN - English",
+  "ES - Spanish",
+  "ET - Estonian",
+  "HU - Hungarian",
+  "IT - Italian",
+  "EL - Greek",
+  "FI - Finnish",
+  "FR - French",
+  "JA - Japanese",
+  "LT - Lithuanian",
+  "LV - Latvian",
+  "NL - Dutch",
+  "PL - Polish",
+  "PT - Portuguese",
+  "PT - Polish",
+  "RO - Romanian",
+  "RU - Russian",
+  "SK - Slovak",
+  "SL - Slovenian",
+  "SV - Swedish",
+  "ZH - Chinese",
+];
+
 chrome.storage.local.get("words", ({ words }) => {
   createTable(words);
 });
 
 chrome.storage.local.get("apikey", ({ apikey }) => {
-  if (apikey === undefined || apikey === null) {
+  if (!apikey) {
     var p = document.createElement("P");
     p.innerHTML =
       "Please configure the api-key before trying to translate words!";
@@ -12,69 +40,11 @@ chrome.storage.local.get("apikey", ({ apikey }) => {
   }
 });
 
-document.getElementById("remove-words").addEventListener(
-  "click",
-  function () {
-    var removeWordsBtn = document.getElementById("remove-words");
-    removeWordsBtn.className = "active-btn";
-    removeWordsBtn.disabled = true;
-    var tbl = document.getElementById("table");
-    var thead = document.getElementById("table-head");
-    if (thead != null) {
-      thead = document.createElement("thead");
-      thead.id = "table-head";
-    }
-    thead
-      .appendChild(document.createElement("th"))
-      .appendChild(document.createTextNode("Remove"));
-    var checkboxes = addCheckboxes();
-    // Create save btn
-    var saveButton = createSaveButton(checkboxes, tbl);
-    document.body.appendChild(saveButton);
-  },
-  false
-);
-
-function createSaveButton(checkboxes, table) {
-  var saveBtn = document.createElement("button");
-  saveBtn.innerHTML = "Save";
-  saveBtn.className = "save-btn";
-  saveBtn.onclick = function () {
-    var wordsToRemove = [];
-    for (var i = 0; i < checkboxes.length; i++) {
-      if (checkboxes[i].checked) {
-        wordsToRemove.push(table.rows[i].cells[0].innerText);
-      }
-    }
-    chrome.storage.local.get("words", function (items) {
-      let words = items.words;
-      wordsToRemove.forEach(
-        (word) => delete words[word.toString().toLowerCase()]
-      );
-      chrome.storage.local.set(
-        {
-          words: words,
-        },
-        function () {
-          createTable(words);
-        }
-      );
-    });
-    // Remove save btn after it is being clicked
-    saveBtn.parentNode.removeChild(saveBtn);
-    var removeWordsBtn = document.getElementById("remove-words");
-    removeWordsBtn.className = "";
-    removeWordsBtn.disabled = false;
-    return false;
-  };
-  return saveBtn;
-}
-
 function createTable(words) {
   // Would be better to just remove words in existing table than
   // destroy the old table and create the new one.
   var tbl = document.getElementById("table");
-  if (tbl === null) {
+  if (tbl === null || tbl === undefined) {
     tbl = document.createElement("table");
     tbl.id = "table";
   } else {
@@ -117,8 +87,52 @@ function createTable(words) {
         document.createTextNode(capitalizeFirstLetter(words[key]))
       );
     });
-    document.body.appendChild(tbl);
   }
+  document.body.appendChild(tbl);
+}
+
+function setSelectedValues(form) {
+  // Set default from language
+  chrome.storage.local.get("from", function (items) {
+    if (items.from != undefined) {
+      for (var i, j = 0; (i = form.elements[1].options[j]); j++) {
+        if (i.value == items.from) {
+          form.elements[1].selectedIndex = j;
+          break;
+        }
+      }
+    }
+  });
+
+  // Set default to language
+  chrome.storage.local.get("to", function (items) {
+    if (items.to != undefined) {
+      for (var i, j = 0; (i = form.elements[2].options[j]); j++) {
+        if (i.value == items.to) {
+          form.elements[2].selectedIndex = j;
+          break;
+        }
+      }
+    }
+  });
+
+  // Set default API key
+  chrome.storage.local.get("apikey", function (items) {
+    if (items.apikey != undefined) {
+      form.elements[0].defaultValue = items.apikey;
+    }
+  });
+}
+
+function isAtLeastOneButtonAcitve() {
+  var removeWordsButton = document.getElementById("remove-words");
+  var optionsButton = document.getElementById("options-button");
+  var practiceButton = document.getElementById("practice-words");
+  return (
+    removeWordsButton.className === "active-btn" ||
+    optionsButton.className === "active-btn" ||
+    practiceButton.calassName === "active-btn"
+  );
 }
 
 function capitalizeFirstLetter(string) {
