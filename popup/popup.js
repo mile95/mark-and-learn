@@ -31,7 +31,7 @@ chrome.storage.local.get("words", ({ words }) => {
 });
 
 chrome.storage.local.get("apikey", ({ apikey }) => {
-  if (apikey === undefined || apikey === null) {
+  if (!apikey) {
     var p = document.createElement("P");
     p.innerHTML =
       "Please configure the api-key before trying to translate words!";
