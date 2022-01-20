@@ -47,46 +47,7 @@ document.getElementById("options-button").addEventListener(
       toLanguageSelect.appendChild(optionTo);
     }
 
-    var saveOptionsButton = document.createElement("Button");
-    saveOptionsButton.id = "save-options-button";
-    saveOptionsButton.innerHTML = "Save";
-    saveOptionsButton.className = "save-btn";
-    saveOptionsButton.addEventListener(
-      "click",
-      function () {
-        var form = document.getElementById("form");
-        chrome.storage.local.set(
-          {
-            apikey: form.elements[0].value,
-            from: form.elements[1].value,
-            to: form.elements[2].value,
-          },
-          function () {
-            console.log("apikey, from and to updated");
-          }
-        );
-        var optionsDiv = document.getElementById("options-form-div");
-        document.body.removeChild(optionsDiv);
-        var optionsBtn = document.getElementById("options-button");
-        optionsBtn.className = "";
-        optionsBtn.disabled = false;
-
-        chrome.storage.local.get("apikey", ({ apikey }) => {
-          if (apikey === undefined || apikey === null || apikey === "") {
-            return;
-          } else {
-            var warningText = document.getElementById("warning-text");
-            if (warningText != undefined) {
-              document.body.removeChild(warningText);
-            }
-            chrome.storage.local.get("words", ({ words }) => {
-              createTable(words);
-            });
-          }
-        });
-      },
-      false
-    );
+    var saveOptionsButton = createSaveButtonForOption();
 
     optionsFormLanguageDiv.appendChild(fromLanguageLabel);
     optionsFormLanguageDiv.appendChild(fromLanguageSelect);
@@ -106,3 +67,47 @@ document.getElementById("options-button").addEventListener(
   },
   false
 );
+
+function createSaveButtonForOption() {
+  var saveOptionsButton = document.createElement("Button");
+  saveOptionsButton.id = "save-options-button";
+  saveOptionsButton.innerHTML = "Save";
+  saveOptionsButton.className = "save-btn";
+  saveOptionsButton.addEventListener(
+    "click",
+    function () {
+      var form = document.getElementById("form");
+      chrome.storage.local.set(
+        {
+          apikey: form.elements[0].value,
+          from: form.elements[1].value,
+          to: form.elements[2].value,
+        },
+        function () {
+          console.log("apikey, from and to updated");
+        }
+      );
+      var optionsDiv = document.getElementById("options-form-div");
+      document.body.removeChild(optionsDiv);
+      var optionsBtn = document.getElementById("options-button");
+      optionsBtn.className = "";
+      optionsBtn.disabled = false;
+
+      chrome.storage.local.get("apikey", ({ apikey }) => {
+        if (apikey === undefined || apikey === null || apikey === "") {
+          return;
+        } else {
+          var warningText = document.getElementById("warning-text");
+          if (warningText != undefined) {
+            document.body.removeChild(warningText);
+          }
+          chrome.storage.local.get("words", ({ words }) => {
+            createTable(words);
+          });
+        }
+      });
+    },
+    false
+  );
+  return saveOptionsButton;
+}
