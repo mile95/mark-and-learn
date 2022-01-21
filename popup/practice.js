@@ -16,6 +16,25 @@ document.getElementById("practice-words").addEventListener(
       row.removeChild(elementToRemove);
       row.appendChild(inputBox);
     });
+	// Create save btn
+    var correctButton = createCorrectButtonForPractice();
+    document.body.appendChild(correctButton);
   },
   false
 );
+
+
+function createCorrectButtonForPractice() {
+  var correctBtn = document.createElement("button");
+  correctBtn.innerHTML = "Correct";
+  correctBtn.className = "save-btn";
+  correctBtn.onclick = function () {
+    // Remove save btn after it is being clicked
+    correctBtn.parentNode.removeChild(correctBtn);
+    var practiceWordsBtn = document.getElementById("practice-words");
+    practiceWordsBtn.className = "";
+    practiceWordsBtn.disabled = false;
+    return false;
+  };
+  return correctBtn;
+}
