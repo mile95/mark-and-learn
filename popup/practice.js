@@ -1,6 +1,6 @@
 document.getElementById("practice-words").addEventListener(
   "click",
-  function () {
+  async function () {
     if (isAtLeastOneButtonAcitve()) {
       return;
     }
@@ -22,7 +22,7 @@ document.getElementById("practice-words").addEventListener(
     });
     var actionsContainer = document.createElement("div");
     actionsContainer.id = "actions-container";
-    var correctButton = createCorrectButtonForPractice();
+    var correctButton = await createCorrectButtonForPractice();
     var resetButton = createResetButtonForPractice();
     actionsContainer.appendChild(correctButton);
     actionsContainer.appendChild(resetButton);
@@ -46,19 +46,23 @@ function createResetButtonForPractice() {
   return resetButton;
 }
 
-function createCorrectButtonForPractice() {
+async function createCorrectButtonForPractice() {
   var correctBtn = document.createElement("button");
   correctBtn.innerHTML = "Correct";
-  correctBtn.onclick = function () {
-    [...document.querySelectorAll("#table tr")].forEach((row, i) => {
+  correctBtn.onclick = await function () {
+    [...document.querySelectorAll("#table tr")].forEach(async (row, i) => {
+      var actionsContainer = row.getElementsByTagName("div")[0];
+      var guess = actionsContainer.getElementsByTagName("input")[0].value;
+      var word = row.getElementsByTagName("td")[0].innerText;
+      var guessCorrect = await checkGuess(word, guess);
+
       var image = document.createElement("img");
       image.className = "icon-check";
-      if (i === 0) {
+      if (guessCorrect) {
         image.src = "../images/check.png";
       } else {
         image.src = "../images/close.png";
       }
-      var actionsContainer = row.getElementsByTagName("div")[0];
       actionsContainer.appendChild(image);
     });
 
@@ -71,4 +75,13 @@ function createCorrectButtonForPractice() {
     return false;
   };
   return correctBtn;
+}
+
+async function checkGuess(word, guess) {
+  var words = await chrome.storage.local.get("words");
+  var translation = words.words[word.toLowerCase()];
+  return (
+    new String(translation.toLowerCase()).valueOf() ==
+    new String(guess.toLowerCase()).valueOf()
+  );
 }
