@@ -131,7 +131,7 @@ function isAtLeastOneButtonAcitve() {
   return (
     removeWordsButton.className === "active-btn" ||
     optionsButton.className === "active-btn" ||
-    practiceButton.calassName === "active-btn"
+    practiceButton.className === "active-btn"
   );
 }
 
