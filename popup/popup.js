@@ -1,31 +1,3 @@
-const languages = [
-  "BG - Bulgarian",
-  "CS - Czech",
-  "DA - Danish",
-  "DE - German",
-  "EN - English",
-  "ES - Spanish",
-  "ET - Estonian",
-  "HU - Hungarian",
-  "IT - Italian",
-  "EL - Greek",
-  "FI - Finnish",
-  "FR - French",
-  "JA - Japanese",
-  "LT - Lithuanian",
-  "LV - Latvian",
-  "NL - Dutch",
-  "PL - Polish",
-  "PT - Portuguese",
-  "PT - Polish",
-  "RO - Romanian",
-  "RU - Russian",
-  "SK - Slovak",
-  "SL - Slovenian",
-  "SV - Swedish",
-  "ZH - Chinese",
-];
-
 chrome.storage.local.get("words", ({ words }) => {
   createTable(words);
 });
@@ -35,7 +7,7 @@ chrome.storage.local.get("apikey", ({ apikey }) => {
     var p = document.createElement("P");
     p.innerHTML =
       "Please configure the api-key before trying to translate words!";
-    p.id = "warning-text";
+    p.className = "warning-text";
     document.body.appendChild(p);
   }
 });
@@ -132,6 +104,16 @@ function isAtLeastOneButtonAcitve() {
     removeWordsButton.className === "active-btn" ||
     optionsButton.className === "active-btn" ||
     practiceButton.className === "active-btn"
+  );
+}
+
+async function isAtleastOneWordStored() {
+  var words = await chrome.storage.local.get("words");
+  console.log(Object.keys(words.words));
+  return !(
+    words === undefined ||
+    words === null ||
+    Object.keys(words.words).length === 0
   );
 }
 
