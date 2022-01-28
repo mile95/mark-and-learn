@@ -25,9 +25,9 @@ document.getElementById("practice-words").addEventListener(
     var correctButton = await createCorrectButtonForPractice();
     var resetButton = createResetButtonForPractice();
     var exitButton = createExitPracticeButton();
-	actionsContainer.appendChild(correctButton);
+    actionsContainer.appendChild(correctButton);
     actionsContainer.appendChild(resetButton);
-	actionsContainer.appendChild(exitButton);
+    actionsContainer.appendChild(exitButton);
     document.body.appendChild(actionsContainer);
   },
   false
@@ -89,20 +89,20 @@ async function createCorrectButtonForPractice() {
 }
 
 function createExitPracticeButton() {
-	var exitButton = document.createElement("button");
-	exitButton.id = "exit-button";
-	exitButton.innerHTML = "Exit";
-	exitButton.onclick = function () {
-		var actionContainer = document.getElementById("actions-container");
-	    actionContainer.parentNode.removeChild(actionContainer);
-		chrome.storage.local.get("words", ({ words }) => {
-  			createTable(words);
-		});
-		var practiceWordsBtn = document.getElementById("practice-words");
-   		 practiceWordsBtn.className = "";
-    	practiceWordsBtn.disabled = false;
-	}
-	return exitButton;
+  var exitButton = document.createElement("button");
+  exitButton.id = "exit-button";
+  exitButton.innerHTML = "Exit";
+  exitButton.onclick = function () {
+    var actionContainer = document.getElementById("actions-container");
+    actionContainer.parentNode.removeChild(actionContainer);
+    chrome.storage.local.get("words", ({ words }) => {
+      createTable(words);
+    });
+    var practiceWordsBtn = document.getElementById("practice-words");
+    practiceWordsBtn.className = "";
+    practiceWordsBtn.disabled = false;
+  };
+  return exitButton;
 }
 
 async function checkGuess(word, guess) {
