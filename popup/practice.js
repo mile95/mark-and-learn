@@ -36,20 +36,20 @@ function createResetButtonForPractice() {
   resetButton.innerHTML = "Reset";
   resetButton.onclick = function () {
     // Reset the correct button.
-	var correctBtn = document.getElementById("correct-button");
-	correctBtn.className = "";
-	correctBtn.disabled = false;
-	[...document.querySelectorAll("#table tr")].forEach(async (row, i) => {
+    var correctBtn = document.getElementById("correct-button");
+    correctBtn.className = "";
+    correctBtn.disabled = false;
+    [...document.querySelectorAll("#table tr")].forEach(async (row, i) => {
       var actionsContainer = row.getElementsByTagName("div")[0];
-	  var image = row.getElementsByTagName("img")[0];
+      var image = row.getElementsByTagName("img")[0];
       var inputText = row.getElementsByTagName("input")[0];
-	  
-	  if (inputText != undefined || inputText != null) {
-	  	inputText.value = "";
-	  }
-	  if (image != undefined || image != null) {
-		 image.parentNode.removeChild(image);
-	  }
+
+      if (inputText != undefined || inputText != null) {
+        inputText.value = "";
+      }
+      if (image != undefined || image != null) {
+        image.parentNode.removeChild(image);
+      }
     });
     return false;
   };
@@ -61,11 +61,11 @@ async function createCorrectButtonForPractice() {
   correctBtn.id = "correct-button";
   correctBtn.innerHTML = "Correct";
   correctBtn.onclick = await function () {
-	// Disable the correct btn, need to reset before clicking again.
+    // Disable the correct btn, need to reset before clicking again.
     var correctBtn = document.getElementById("correct-button");
     correctBtn.className = "active-btn";
     correctBtn.disabled = true;
-	[...document.querySelectorAll("#table tr")].forEach(async (row, i) => {
+    [...document.querySelectorAll("#table tr")].forEach(async (row, i) => {
       var actionsContainer = row.getElementsByTagName("div")[0];
       var guess = actionsContainer.getElementsByTagName("input")[0].value;
       var word = row.getElementsByTagName("td")[0].innerText;
@@ -81,7 +81,6 @@ async function createCorrectButtonForPractice() {
       actionsContainer.appendChild(image);
     });
 
-	
     return false;
   };
   return correctBtn;
