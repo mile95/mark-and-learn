@@ -35,12 +35,21 @@ function createResetButtonForPractice() {
   var resetButton = document.createElement("button");
   resetButton.innerHTML = "Reset";
   resetButton.onclick = function () {
-     [...document.querySelectorAll("#table tr")].forEach(async (row, i) => {
+    // Reset the correct button.
+	var correctBtn = document.getElementById("correct-button");
+	correctBtn.className = "";
+	correctBtn.disabled = false;
+	[...document.querySelectorAll("#table tr")].forEach(async (row, i) => {
       var actionsContainer = row.getElementsByTagName("div")[0];
 	  var image = row.getElementsByTagName("img")[0];
       var inputText = row.getElementsByTagName("input")[0];
-	  inputText.value = "";
-	  image.parentNode.removeChild(image);
+	  
+	  if (inputText != undefined || inputText != null) {
+	  	inputText.value = "";
+	  }
+	  if (image != undefined || image != null) {
+		 image.parentNode.removeChild(image);
+	  }
     });
 	// Remove actions buttons
     var practiceWordsBtn = document.getElementById("practice-words");
@@ -53,9 +62,14 @@ function createResetButtonForPractice() {
 
 async function createCorrectButtonForPractice() {
   var correctBtn = document.createElement("button");
+  correctBtn.id = "correct-button";
   correctBtn.innerHTML = "Correct";
   correctBtn.onclick = await function () {
-    [...document.querySelectorAll("#table tr")].forEach(async (row, i) => {
+	// Disable the correct btn, need to reset before clicking again.
+    var correctBtn = document.getElementById("correct-button");
+    correctBtn.className = "active-btn";
+    correctBtn.disabled = true;
+	[...document.querySelectorAll("#table tr")].forEach(async (row, i) => {
       var actionsContainer = row.getElementsByTagName("div")[0];
       var guess = actionsContainer.getElementsByTagName("input")[0].value;
       var word = row.getElementsByTagName("td")[0].innerText;
@@ -71,10 +85,7 @@ async function createCorrectButtonForPractice() {
       actionsContainer.appendChild(image);
     });
 
-    // Remove actions buttons
-    var practiceWordsBtn = document.getElementById("practice-words");
-    practiceWordsBtn.className = "";
-    practiceWordsBtn.disabled = false;
+	
     return false;
   };
   return correctBtn;
