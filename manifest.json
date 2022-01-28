@@ -1,7 +1,7 @@
 {
   "name": "Mark and Learn",
-  "description": "Mark words and the extension will store the translation in your glossary. All in your browser.",
-  "version": "0.0.1",
+  "description": "Combine creating and practicing a vocabulary in one extension.",
+  "version": "0.0.2",
   "manifest_version": 3,
   "background": {
     "service_worker": "/background/background.js"
