@@ -107,14 +107,15 @@ function isAtLeastOneButtonAcitve() {
   );
 }
 
-
 async function isAtleastOneWordStored() {
-	var words = await chrome.storage.local.get("words");
-	console.log(Object.keys(words.words));
-	return !(words === undefined || words === null || Object.keys(words.words).length === 0);
+  var words = await chrome.storage.local.get("words");
+  console.log(Object.keys(words.words));
+  return !(
+    words === undefined ||
+    words === null ||
+    Object.keys(words.words).length === 0
+  );
 }
-
-
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);

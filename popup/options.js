@@ -26,7 +26,6 @@ const languages = [
   "ZH - Chinese",
 ];
 
-
 document.getElementById("options-button").addEventListener(
   "click",
   function () {
