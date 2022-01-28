@@ -1,3 +1,32 @@
+const languages = [
+  "BG - Bulgarian",
+  "CS - Czech",
+  "DA - Danish",
+  "DE - German",
+  "EN - English",
+  "ES - Spanish",
+  "ET - Estonian",
+  "HU - Hungarian",
+  "IT - Italian",
+  "EL - Greek",
+  "FI - Finnish",
+  "FR - French",
+  "JA - Japanese",
+  "LT - Lithuanian",
+  "LV - Latvian",
+  "NL - Dutch",
+  "PL - Polish",
+  "PT - Portuguese",
+  "PT - Polish",
+  "RO - Romanian",
+  "RU - Russian",
+  "SK - Slovak",
+  "SL - Slovenian",
+  "SV - Swedish",
+  "ZH - Chinese",
+];
+
+
 document.getElementById("options-button").addEventListener(
   "click",
   function () {

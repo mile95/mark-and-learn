@@ -87,7 +87,7 @@ button:hover {
   color: black;
 }
 
-#warning-text {
+.warning-text {
   text-align: center;
   color: #e76f51;
   font-size: 14px;

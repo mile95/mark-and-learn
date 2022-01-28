@@ -1,9 +1,20 @@
 document.getElementById("remove-words").addEventListener(
   "click",
-  function () {
-    if (isAtLeastOneButtonAcitve()) {
+  async function () {
+   	if (isAtLeastOneButtonAcitve() || document.getElementById("warning-text")) {
       return;
     }
+	
+	var atLeastOneWordStored = await isAtleastOneWordStored();
+	if (!atLeastOneWordStored) {
+  		var text = document.createElement("p");
+		text.innerHTML = "Please add a few words first!";
+		text.className = "warning-text";
+		text.id = "warning-text";
+		document.body.appendChild(text);
+		return;
+	}
+	
     var removeWordsBtn = document.getElementById("remove-words");
     removeWordsBtn.className = "active-btn";
     removeWordsBtn.disabled = true;
