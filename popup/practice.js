@@ -35,9 +35,14 @@ function createResetButtonForPractice() {
   var resetButton = document.createElement("button");
   resetButton.innerHTML = "Reset";
   resetButton.onclick = function () {
-    // Remove actions buttons
-    var actionsContainer = document.getElementById("actions-container");
-    actionsContainer.parentNode.removeChild(actionsContainer);
+     [...document.querySelectorAll("#table tr")].forEach(async (row, i) => {
+      var actionsContainer = row.getElementsByTagName("div")[0];
+	  var image = row.getElementsByTagName("img")[0];
+      var inputText = row.getElementsByTagName("input")[0];
+	  inputText.value = "";
+	  image.parentNode.removeChild(image);
+    });
+	// Remove actions buttons
     var practiceWordsBtn = document.getElementById("practice-words");
     practiceWordsBtn.className = "";
     practiceWordsBtn.disabled = false;
@@ -67,8 +72,6 @@ async function createCorrectButtonForPractice() {
     });
 
     // Remove actions buttons
-    var actionsContainer = document.getElementById("actions-container");
-    actionsContainer.parentNode.removeChild(actionsContainer);
     var practiceWordsBtn = document.getElementById("practice-words");
     practiceWordsBtn.className = "";
     practiceWordsBtn.disabled = false;
