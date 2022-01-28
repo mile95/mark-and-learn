@@ -131,23 +131,10 @@ function isAtLeastOneButtonAcitve() {
   return (
     removeWordsButton.className === "active-btn" ||
     optionsButton.className === "active-btn" ||
-    practiceButton.calassName === "active-btn"
+    practiceButton.className === "active-btn"
   );
 }
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-function addCheckboxes() {
-  var checkboxes = [];
-  [...document.querySelectorAll("#table tr")].forEach((row, i) => {
-    var checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    const cell = document.createElement("td");
-    cell.appendChild(checkbox);
-    checkboxes.push(checkbox);
-    row.appendChild(cell);
-  });
-  return checkboxes;
 }
