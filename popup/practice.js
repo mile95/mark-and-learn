@@ -51,10 +51,6 @@ function createResetButtonForPractice() {
 		 image.parentNode.removeChild(image);
 	  }
     });
-	// Remove actions buttons
-    var practiceWordsBtn = document.getElementById("practice-words");
-    practiceWordsBtn.className = "";
-    practiceWordsBtn.disabled = false;
     return false;
   };
   return resetButton;
