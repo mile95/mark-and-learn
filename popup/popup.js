@@ -109,7 +109,6 @@ function isAtLeastOneButtonAcitve() {
 
 async function isAtleastOneWordStored() {
   var words = await chrome.storage.local.get("words");
-  console.log(Object.keys(words.words));
   return !(
     words === undefined ||
     words === null ||
